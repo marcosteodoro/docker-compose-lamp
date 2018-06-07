@@ -1,0 +1,21 @@
+version: '2'
+
+services:
+  webserver:
+    build: .
+    ports:
+      - '80:80'
+    volumes:
+      - ./htdocs:/var/www/html
+      - ./apache.conf:/etc/apache2/sites-available/000-default.conf
+    links:
+      - db
+  db:
+    image: mysql:5.7
+    volumes:
+      - /var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=toor
+      - MYSQL_DATABASE=root
+    ports:
+      - 3306:3306
